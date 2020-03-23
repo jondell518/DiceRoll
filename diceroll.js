@@ -1,91 +1,125 @@
-var numDice = prompt("Number of D6 to roll: ");
-var numSuccess = prompt("Number needed for success: ");
+var standingsSheet;
+var resultsSheet;
+var upcomingSheet;
 
-var one = 0;
-var two =0;
-var three=0;
-var four=0;
-var five=0;
-var six=0;
+var pulledData = "https://docs.google.com/spreadsheets/d/1IBkbkTjOlSNeMH7WkgbtZwhgB5q6S8QHaiIC7qX7iaM/edit?usp=sharing";
 
-function roll (numDice)
+
+function init() {
+    Tabletop.init( { key: pulledData,
+                     callback: showInfo,
+                     simpleSheet: false } )
+
+     }
+
+  function showInfo(data, tabletop) {
+    //alert('Successfully processed!')
+    standingsSheet = tabletop.sheets("Standings");
+    resultsSheet = tabletop.sheets("Results");
+    //console.log(standingsSheet.elements);
+  }
+var rules = document.getElementById('rules');
+var standings = document.getElementById('standings');
+
+window.addEventListener('DOMContentLoaded', init)
+var standingP = document.createElement("p");
+var resultsP = document.createElement("p");
+var upcomingP = document.createElement("p");
+var rulesP = document.createElement("p");
+
+standings.onclick = function()
 {
-	var results = [];
+	 
+	sortByWins(standingsSheet.elements);
+	standingP.innerHTML = printStandings(standingsSheet.elements);
+	standingP.style.color = "white";
+	resultsP.remove();
+	upcomingP.remove();
+	rulesP.remove();
+	document.getElementById("main").appendChild(standingP);
+	//standings.disabled = true;
+}
 
-	for (var i = 0; i < numDice; i++) 
+function printStandings (sheet)
+{
+	var toPrint = "Billion Dollar Clown Farm TTS League Standings<br><br>";
+	var count = 0;
+
+	for(var i=0; i< sheet.length;i++)
 	{
-		results[i] = Math.floor((Math.random()*6)+1);
-
-		if(results[i] == 1)
-		{
-			one++;
-		}
-		else if(results[i] == 2)
-		{
-			two++;
-		}
-		else if(results[i] == 3)
-		{
-			three++;
-		}
-		else if(results[i] == 4)
-		{
-			four++;
-		}
-		else if(results[i] == 5)
-		{
-			five++;
-		}
-		else if(results[i] == 6)
-		{
-			six++;
-		}
+		toPrint = toPrint + (i+1) + ") " + sheet[i].PlayerName + " | Wins: " + sheet[i].Wins +
+		 " | Losses: " + sheet[i].Losses + " | Avg VP: " + sheet[i].AvgVP + " | Total VP: " + sheet[i].TotalVP + "<br>";
+		count++;
 	}
-
-	return results;
 	
+	return toPrint;
 }
 
-function checkSuccess (numSuccess, rolls)
+function sortByWins (sheet)
 {
-	var success =0;
-	for(var i = 0; i<rolls.length;i++)
+	sheet.sort(function(a,b)
 	{
-		if(rolls[i] >= numSuccess)
-			success++;
-	}
-	return success;
-
+		return b.Wins - a.Wins;
+	});
 }
 
-function printOutput (rolls, passed)
+function sortByWeek(sheet)
 {
-	var counter = 0;
-	document.write("Rolling dice.... " + "<br>");
-	document.write("Results: <br>");
-	/*for(var i=0; i<rolls.length; i++)
+	sheet.sort(function(a,b)
 	{
-		document.write(rolls[i] + ",");
-		counter++;
-		if(counter > 10)
+		return a.Week - b.Week;
+	})
+}
+
+var results = document.getElementById('results');
+
+results.onclick = function()
+{
+	sortByWeek(resultsSheet.elements);
+	//resultsP.innerHTML = printStandings(resultsSheet.elements);
+	resultsP.innerHTML = printResults(resultsSheet.elements);
+	resultsP.style.color = "white";
+	standingP.remove();
+	upcomingP.remove();
+	rulesP.remove();
+	document.getElementById("main").appendChild(resultsP);
+	//results.disabled = true;
+}
+
+function printResults (sheet)
+{
+	var toPrint = "Match Results" + "<br>";
+	var weekCount = 1;
+	toPrint = toPrint + "<br> Week 1 Results <br>";
+	for(var i=0; i<sheet.length;i++)
+	{
+
+		if(sheet[i].Week != weekCount)
 		{
-			document.write("<br>");
-			counter =0;
+			weekCount++;
+			toPrint = toPrint + "<br> Week " + weekCount + " Results: <br>";
+			toPrint = toPrint + sheet[i].Player1 + " vs. " + sheet[i].Player2 
+			+ " | Score: " + sheet[i].Player1Score + "-" + sheet[i].Player2Score + "<br>";
 		}
+		else
+		{
+			
+			toPrint = toPrint + sheet[i].Player1 + " vs. " + sheet[i].Player2 
+			+ " | Score: " + sheet[i].Player1Score + "-" + sheet[i].Player2Score + "<br>";
+		}
+
 	}
-	document.write("<br>");*/
-	document.write("1s: " + one + "<br>");
-	document.write("2s: " + two + "<br>");
-	document.write("3s: " + three + "<br>");
-	document.write("4s: " + four + "<br>");
-	document.write("5s: " + five + "<br>");
-	document.write("6s: " + six + "<br>");
-	document.write("<br>" + " Number Passed (Needing " + numSuccess + "+): " + passed);
+
+	return toPrint;
 }
 
-var rolls = roll(numDice);
-var passed = checkSuccess(numSuccess, rolls);
-//document.write("Number passed: " + passed);
-
-printOutput(rolls, passed);
-
+rules.onclick = function()
+{
+	
+	rulesP.innerHTML = "LEAGUE RULES <br><br>Each game will be 1500 points, with a cap of 69 models. The league will run 6 weeks, with 1 game per week. Pairings will be done randomly, and then by Win-Loss Swiss Style. Game results can be submitted through this Google  " + '<a href=https://forms.gle/ESfTjvbE8MtxBjug6>form.</a>';
+	rulesP.style.color = "white";
+	resultsP.remove();
+	upcomingP.remove();
+	standingP.remove();
+	document.getElementById("main").appendChild(rulesP);
+}

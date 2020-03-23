@@ -1,10 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+	<style>
+		.header {
+  			text-align: center;
+  			padding: 0px;
+		}
+		.button {
+		  background-color: #ff0000; /* Red */
+		  border: none;
+		  color: white;
+		  padding: 10px 10px;
+		  text-align: center;
+		  text-decoration: none;
+		  display: inline-block;
+		  font-size: 22px;
+		  float: left;
+		  border: 2px solid black;
+		  cursor: pointer;
+		  width: 25%;
+		  transition-duration: 0.4s;
+		}
+
+		.button:hover{
+			background-color:#660000; /* darker red */
+		  	color: white;
+		}
+		body {
+		  background-image: url('whizbackground.jpg');
+		}
+
+		p {
+			font-size: 22px;
+  			text-indent: 0px;
+  			text-align: center;
+  			letter-spacing: 1px;
+  			background-color: rgba(1,1,1,0.75);
+		}
+		a{
+			color: white;
+		}
+		
+</style>
+	<div class="header">
+		<button class='button' id="standings">Standings</button>
+		<button class='button' id="results">Results</button>
+		<button class='button' id="upcoming">Upcoming</button>
+		<button class='button' id="rules">League Rules</button>
+	</div>
 </head>
 
 <body> 
+	<style>
+	</style>
 	<script src='diceroll.js'></script>
+	<div id="main"></div>
+	
 </body>
 
 </html>
