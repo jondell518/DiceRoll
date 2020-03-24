@@ -33,10 +33,10 @@ upcoming.onclick = function()
 {
 	console.log("clicked!");
 	sortByWeek(upcomingSheet.elements);
-	resultsP.innerHTML = printUpcoming(upcomingSheet.elements);
-	resultsP.style.color = "white";
+	upcomingP.innerHTML = printUpcoming(upcomingSheet.elements);
+	upcomingP.style.color = "white";
 	standingP.remove();
-	upcomingP.remove();
+	resultsP.remove();
 	rulesP.remove();
 	document.getElementById("main").appendChild(resultsP);
 }
