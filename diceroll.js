@@ -38,7 +38,7 @@ upcoming.onclick = function()
 	standingP.remove();
 	resultsP.remove();
 	rulesP.remove();
-	document.getElementById("main").appendChild(resultsP);
+	document.getElementById("main").appendChild(upcomingP);
 }
 
 standings.onclick = function()
