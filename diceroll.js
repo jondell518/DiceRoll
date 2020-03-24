@@ -16,16 +16,30 @@ function init() {
     //alert('Successfully processed!')
     standingsSheet = tabletop.sheets("Standings");
     resultsSheet = tabletop.sheets("Results");
+    upcomingSheet = tabletop.sheets("Upcoming");
     //console.log(standingsSheet.elements);
   }
 var rules = document.getElementById('rules');
 var standings = document.getElementById('standings');
+var upcoming = document.getElementById('upcoming');
 
 window.addEventListener('DOMContentLoaded', init)
 var standingP = document.createElement("p");
 var resultsP = document.createElement("p");
 var upcomingP = document.createElement("p");
 var rulesP = document.createElement("p");
+
+upcoming.onclick = function()
+{
+	console.log("clicked!");
+	sortByWeek(upcomingSheet.elements);
+	resultsP.innerHTML = printUpcoming(upcomingSheet.elements);
+	resultsP.style.color = "white";
+	standingP.remove();
+	upcomingP.remove();
+	rulesP.remove();
+	document.getElementById("main").appendChild(resultsP);
+}
 
 standings.onclick = function()
 {
@@ -122,4 +136,29 @@ rules.onclick = function()
 	upcomingP.remove();
 	standingP.remove();
 	document.getElementById("main").appendChild(rulesP);
+}
+
+function printUpcoming (sheet)
+{
+	var toPrint = "Upcoming Matches" + "<br>";
+	var weekCount = 1;
+	toPrint = toPrint + "<br> Week 1 Matches <br>";
+	for(var i=0; i<sheet.length;i++)
+	{
+
+		if(sheet[i].Week != weekCount)
+		{
+			weekCount++;
+			toPrint = toPrint + "<br> Week " + weekCount + " Results: <br>";
+			toPrint = toPrint + sheet[i].Player1 + " vs. " + sheet[i].Player2 + "<br>";
+		}
+		else
+		{
+			
+			toPrint = toPrint + sheet[i].Player1 + " vs. " + sheet[i].Player2 + "<br>";
+		}
+
+	}
+
+	return toPrint;
 }
