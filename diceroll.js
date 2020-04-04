@@ -58,6 +58,11 @@ function printStandings (sheet)
 {
 	var toPrint = "Billion Dollar Clown Farm TTS League Standings<br><br>";
 	var count = 0;
+	
+	sheet.sort(function(a,b)
+	{
+		return b.TotalVP - a.TotalVP;
+	});
 
 	for(var i=0; i< sheet.length;i++)
 	{
