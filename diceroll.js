@@ -154,7 +154,7 @@ function printUpcoming (sheet)
 		if(sheet[i].Week != weekCount)
 		{
 			weekCount++;
-			toPrint = toPrint + "<br> Week " + weekCount + " Results: <br>";
+			toPrint = toPrint + "<br> Week " + weekCount + " Matches: <br>";
 			toPrint = toPrint + sheet[i].Player1 + " vs. " + sheet[i].Player2 + "<br>";
 		}
 		else
