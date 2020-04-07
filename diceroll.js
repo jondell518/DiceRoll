@@ -44,7 +44,7 @@ upcoming.onclick = function()
 standings.onclick = function()
 {
 	 
-	sortByWins(standingsSheet.elements);
+	
 	standingP.innerHTML = printStandings(standingsSheet.elements);
 	standingP.style.color = "white";
 	resultsP.remove();
@@ -59,10 +59,10 @@ function printStandings (sheet)
 	var toPrint = "Billion Dollar Clown Farm TTS League Standings<br><br>";
 	var count = 0;
 	
-	sheet.sort(function(a,b)
-	{
-		return b.TotalVP - a.TotalVP;
-	});
+
+	sortStandings(sheet);
+
+	
 
 	for(var i=0; i< sheet.length;i++)
 	{
@@ -74,8 +74,14 @@ function printStandings (sheet)
 	return toPrint;
 }
 
-function sortByWins (sheet)
+function sortStandings (sheet)
 {
+
+	sheet.sort(function(a,b)
+	{
+		return b.TotalVP - a.TotalVP;
+	});
+
 	sheet.sort(function(a,b)
 	{
 		return b.Wins - a.Wins;
