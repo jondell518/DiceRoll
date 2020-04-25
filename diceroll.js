@@ -67,7 +67,7 @@ function printStandings (sheet)
 	for(var i=0; i< sheet.length;i++)
 	{
 		toPrint = toPrint + (i+1) + ") " + sheet[i].PlayerName + " | Wins: " + sheet[i].Wins +
-		 " | Losses: " + sheet[i].Losses + " | Avg VP: " + sheet[i].AvgVP + " | Total VP: " + sheet[i].TotalVP + "<br>";
+		 " | Losses: " + sheet[i].Losses + " | Ties: " + sheet[i].Ties +  " | Avg VP: " + sheet[i].AvgVP + " | Total VP: " + sheet[i].TotalVP + "<br>";
 		count++;
 	}
 	
